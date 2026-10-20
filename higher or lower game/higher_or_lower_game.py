@@ -6,8 +6,10 @@ print(art.logo)
 first_account = random.choice(game_data.data)
 #Initialize current score
 current_score = 0
-def second_account():
+def second_account(first):
     another_account = random.choice(game_data.data)
+    while another_account == first:
+        another_account = random.choice(game_data.data)
     return another_account
 def compare_followers(first, second):
     #create variable for follower count
@@ -17,6 +19,8 @@ def compare_followers(first, second):
     highest_followed_account = max(first_account_followers, second_account_followers)
     return highest_followed_account
 def game(first, second):
+    while first == second:
+        second = second_account(first)
     print("Compare A :" + first["name"] + ", " + first["description"] + ", " + first["country"])
     print(art.vs)
     print("Against B :" + second["name"] + ",  " + second["description"] + ", " + second["country"])
@@ -33,8 +37,8 @@ def game(first, second):
         global current_score
         current_score += 1
         print(f"You are correct! your current score is {current_score}")
-        game(second, second_account())
+        game(second, second_account(second))
     else:
         print(f"You are incorrect! your final score is {current_score}")
         return
-game(first_account, second_account())
+game(first_account, second_account(first_account))
